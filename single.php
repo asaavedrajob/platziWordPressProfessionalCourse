@@ -17,10 +17,12 @@
             </div>
           </div>
 
-          // This will allow us to use 'partials' which is code that could be re-used in other parts of the code
-          // 'template-parts/post' => is the location of the file
-          // 'navigation' => is the last part of the file name, due to we could have several files starting with the word 'post', we only have to add the word 'navigation' to identify the file we want to use here. The extension file is not necesary here.
-          <?php get_template_part('template-parts/post','navigation') ?>
+          <?php 
+            // This will allow us to use 'partials' which is code that could be re-used in other parts of the code
+            // 'template-parts/post' => is the location of the file
+            // 'navigation' => is the last part of the file name, due to we could have several files starting with the word 'post', we only have to add the word 'navigation' to identify the file we want to use here. The extension file is not necesary here.
+            get_template_part('template-parts/post','navigation') 
+          ?>
         <?php
       }
     }
