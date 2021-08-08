@@ -88,4 +88,28 @@
   // init -> this will be an action generated after 'after_setup_theme' hook
   add_action('init','my_products_custom_post_type');
 
+  function register_categories_for_my_products_taxonomy(){
+    // 'hierarchical' => true -> define if the taxonomy will allow sub-categories 
+    // 'labels' => array('name' => '...', 'singular_name' => '...') -> label > name will be used in WP Admin Dashboard Menu and as the title inside the Category page. label > singular_name is used in unknown place
+    // 'show_in_nav_menu' => true -> show the taxonomy in the WP Admin Dashboard Menu
+    // 'show_admin_column' => true -> Will allow us to see in which category the My Products are linked
+    // 'rewrite' => array('slug' => 'category-my-products') -> will asign how the url will be presented for each category created
+    $args = array(
+      'hierarchical' => true,
+      'labels' => array(
+        'name' => 'Categories for My Products',
+        'singular_name' => 'Category for My Products'
+      ),
+      'show_in_nav_menu' => true,
+      'show_admin_column' => true,
+      'rewrite' => array('slug' => 'category-my-products')
+    );
+
+    // 'category-my-products' -> should be the same name that we have set in 'rewrite' arg
+    // array('my_product') -> to which Post Types or Custom Post Types the taxonomy will be linked to, could be to multiples separated by a comma
+    register_taxonomy('category-my-products',array('my_product'),$args);
+  }
+
+  add_action('init','register_categories_for_my_products_taxonomy')
+
 ?>

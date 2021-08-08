@@ -5,6 +5,10 @@
     if (have_posts()){
       while(have_posts()){
         the_post();
+
+        // get_the_ID() -> will bring the ID of the current Post
+        // 'category-my-products' -> is the taxonomy name that we specified on register_taxonomy FN
+        $my_taxonomy = get_the_terms(get_the_ID(), 'category-my-products');
         ?>
           <h1 class="my-3"><?php the_title(); ?></h1>
 
@@ -18,11 +22,22 @@
           </div>
 
           <?php
+            // 'tax_query' => array(...) -> will allow us to filter our query based on a taxonomy
+            // 'taxonomy' => 'category-my-products' -> is the taxonomy name that we specified on register_taxonomy FN
+            // 'field' => 'slug' -> which field will be used to filter the results
+            // 'terms' => $my_taxonomy[0] -> slug -> the taxonomy slug value of the current Post
             $args = array(
               'post_type' => 'my_product',
               'post_per_page' => 6,
               'order' => 'ASC',
-              'orderby' => 'title'
+              'orderby' => 'title',
+              'tax_query' => array(
+                array(
+                  'taxonomy' => 'category-my-products',
+                  'field' => 'slug',
+                  'terms' => $my_taxonomy[0] -> slug
+                )
+              )
             );
 
             $my_products = new WP_Query($args);
