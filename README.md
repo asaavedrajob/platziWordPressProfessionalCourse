@@ -6,7 +6,6 @@ En este curso comenzaremos la creación del catálogo de productos de Platzi con
 
 El codigo que encontraras aqui es un theme con las siguientes caracteristicas:
 
-/*
 Theme Name: Platzi WordPress Practical Course
 Version: 1.0
 Description: Testing the creation of a theme
@@ -14,4 +13,4 @@ Author: Yo mero
 Author URI: https://yomero.com/
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-*/
+
