@@ -1,8 +1,8 @@
-Curso Práctico de WordPress
+Curso Profesional de WordPress
 
-https://platzi.com/clases/fundamentos-wordpress/
+https://platzi.com/clases/wordpress-profesional/
 
-En este curso comenzaremos la creación del catálogo de productos de Platzi con WordPress, aprenderás desde 0 cómo instalarlo, luego, cómo crear tus primeras vistas y hasta podrás desarrollar tu primer plug-in. Durante este curso aprenderás a través del desarrollo de un catálogo de productos de Platzi cómo comenzar a dar tus primeros pasos con WordPress para continuar con esto en nuestro curso profesional de WordPress, donde podrás llevar todas tu bases a un nivel profesional.
+Crearás un sitio que contará con una página principal donde se podrá revisar productos de un catálogo y acceder a las últimas novedades del blog. Luego estará la sección con todas las novedades y una página con información institucional. Como extra, desarrollarás una página de contacto.
 
-Aldo: El codigo que encontraras aqui es de un theme para WordPress 5.8 llamado Platzi WordPress Practical Course.
+Aldo: El codigo que encontraras aqui es de un theme para WordPress 5.8 llamado Platzi WordPress Professional Course.
 
