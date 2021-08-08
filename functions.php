@@ -27,6 +27,10 @@
     wp_enqueue_script('bootstrap','https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js',array('jquery'),'5.1.0',true); //Bootstrap’s JavaScript Bundle with Popper
 
     wp_enqueue_script('myFunctions',get_template_directory_uri().'/assets/js/custom.js','','1.0',true);
+
+    wp_localize_script('myFunctions', 'myObject', array(
+      'ajaxurl' => admin_url('admin-ajax.php')
+    ));
   }
 
   add_action('wp_enqueue_scripts','load_my_assets');
@@ -82,13 +86,13 @@
     );
 
     // WP recomends to have name in singular for the Post Type name
-    register_post_type("my_product", $args);
+    register_post_type('my_product', $args);
   }
 
   // init -> this will be an action generated after 'after_setup_theme' hook
   add_action('init','my_products_custom_post_type');
 
-  function register_categories_for_my_products_taxonomy(){
+  function register_taxonomy_categories_for_my_products(){
     // 'hierarchical' => true -> define if the taxonomy will allow sub-categories 
     // 'labels' => array('name' => '...', 'singular_name' => '...') -> label > name will be used in WP Admin Dashboard Menu and as the title inside the Category page. label > singular_name is used in unknown place
     // 'show_in_nav_menu' => true -> show the taxonomy in the WP Admin Dashboard Menu
@@ -110,6 +114,51 @@
     register_taxonomy('category-my-products',array('my_product'),$args);
   }
 
-  add_action('init','register_categories_for_my_products_taxonomy')
+  add_action('init','register_taxonomy_categories_for_my_products');
+
+  function filter_for_my_products(){
+    $args = array(
+      'post_type' => 'my_product',
+      'post_per_page' => -1,
+      'order' => 'ASC',
+      'orderby' => 'title',
+    );
+
+    // If there is no category then we do not need to filter by Taxonomy
+    if($_POST['category_to_filter']){
+      $args['tax_query'] = array(
+        array(
+          'taxonomy' => 'category-my-products',
+          'field' => 'slug',
+          'terms' => $_POST['category_to_filter']
+        )
+      );
+    }
+
+    $my_products = new WP_Query($args);
+
+    // If the WP_Query my_products have results then we will fill an array() with them
+    if($my_products -> have_posts()){
+      $return = array();
+      while($my_products -> have_posts()){
+        $my_products -> the_post();
+
+        // adding to the array each of the Post Types the WP_Query has found based on the Taxonomy and Specific Post Type filtered
+        $return[] = array(
+          'image' => get_the_post_thumbnail(get_the_ID(),'large'),
+          'link' => get_the_permalink(),
+          'title' => get_the_title()
+        );
+      }
+
+      // All FNs used by ajax have to send the results as JSON
+      // wp_send_json() -> transform an array to JSON
+      wp_send_json($return);
+    }
+  }
+
+  // Registering the FN filter_for_my_products to be used by logged and not logged users
+  add_action('wp_ajax_nopriv_filter_for_my_products','filter_for_my_products');
+  add_action('wp_ajax_filter_for_my_products','filter_for_my_products');
 
 ?>
